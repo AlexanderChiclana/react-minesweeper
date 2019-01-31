@@ -15,17 +15,30 @@ class Gameboard extends Component {
 
 
       // const boardArray = []
-      for (let i = 0; i < 64; i++) {
-        let bomb = false
-        if (Math.floor(Math.random() * 11) > 8 ) {
-          
-          bomb = true
-        }
+      // for (let i = 0; i < 64; i++) {
+      //   let bomb = false
+      //   if (Math.floor(Math.random() * 11) > 8 ) {
+      //     bomb = true
+      //   }
 
-        this.state.boardArray.push(
-          <Space key={i} bomb={bomb}/>
-        )
+      //   this.state.boardArray.push(
+      //     <Space key={i} bomb={bomb}/>
+      //   )
+      // }
+
+      for (let i = 0; i < 8; i++) {
+        this.state.boardArray.push([])
+        for (let j = 0; j < 8; j++) {
+          let bomb = false
+          if (Math.floor(Math.random() * 11) > 8 ) {
+            bomb = true
+          }
+          this.state.boardArray[i].push(
+            <Space key={i.toString() + j.toString()} bomb={bomb}/>
+          )
+        }
       }
+
 
       return ( <div className='gameBoard'>
 

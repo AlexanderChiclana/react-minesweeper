@@ -7,7 +7,8 @@ class Gameboard extends Component {
       xGrid: 0,
       yGrid: 0,
 
-      boardArray: []
+      boardArray: [],
+      flatBoardArray: []
     }
 
     // reveal needs to happen at this level? 
@@ -30,7 +31,6 @@ class Gameboard extends Component {
       }
 
       // seperate function to assign adjacent Number prop. Needs to iterate through 2d array, and perform logic check to count of adjacent slots with bomb
-      console.log(this.state.boardArray[1][1].props.bomb)
       
       
 
@@ -45,10 +45,65 @@ class Gameboard extends Component {
             if (
               boardIndex[i][j + 1].props.bomb == true) {
               adjSum++
-              console.log('to the right of ',i.toString() + j.toString() , 'is a bomb')
-            }
-          }catch(error){
-          }
+              // console.log('to the right of ',i.toString() + j.toString() , 'is a bomb')
+            }}
+          catch(error){}
+
+          try{
+            if (
+              boardIndex[i][j - 1].props.bomb == true) {
+              adjSum++
+              // console.log('to the left of ',i.toString() + j.toString() , 'is a bomb')
+            }}
+          catch(error){}
+
+          try{
+            if (
+              boardIndex[i - 1][j].props.bomb == true) {
+              adjSum++
+              // console.log('to the top of ',i.toString() + j.toString() , 'is a bomb')
+            }}
+          catch(error){}
+
+          
+          try{
+            if (
+              boardIndex[i + 1][j].props.bomb == true) {
+              adjSum++
+              // console.log('to the bottom of ',i.toString() + j.toString() , 'is a bomb')
+            }}
+          catch(error){}
+
+          try{
+            if (
+              boardIndex[i + 1][j + 1].props.bomb == true) {
+              adjSum++
+            }}
+          catch(error){}
+
+          try{
+            if (
+              boardIndex[i + 1][j - 1].props.bomb == true) {
+              adjSum++
+            }}
+          catch(error){}
+
+          try{
+            if (
+              boardIndex[i - 1][j + 1].props.bomb == true) {
+              adjSum++
+            }}
+          catch(error){}
+
+          try{
+            if (
+              boardIndex[i - 1][j - 1].props.bomb == true) {
+              adjSum++
+            }}
+          catch(error){}
+
+          this.state.flatBoardArray.push(React.cloneElement( boardIndex[i][j], {adjacent: adjSum} ))
+
           // need to do this for every adj combo
 
           
@@ -60,7 +115,7 @@ class Gameboard extends Component {
 
       return ( <div className='gameBoard'>
 
-        {this.state.boardArray}
+        {this.state.flatBoardArray}
 
         {/* <Space bomb={true}/> 
         <Space /> 

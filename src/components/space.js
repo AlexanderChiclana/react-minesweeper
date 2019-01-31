@@ -15,7 +15,7 @@ class Space extends Component {
   }
 
   render() {
-    return ( <div className='space' onClick={this.revealSquare}> { this.state.revealed ? this.state.adjacent : 'SPACE' }</div>
+    return ( <div className='space' onClick={this.revealSquare}> { this.state.revealed ? this.props.adjacent : 'SPACE' }</div>
     )
   }
 }

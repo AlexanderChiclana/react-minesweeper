@@ -8,6 +8,16 @@ class Gameboard extends Component {
       yGrid: 0,
 
       boardArray: [],
+      boardArrayWithAdj: [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
       flatBoardArray: []
     }
 
@@ -17,6 +27,7 @@ class Gameboard extends Component {
       const currentposition = this.state.boardArray[index[0]][index[1]]
 
       // go through each one and check for revealed and 0, reveal the adjacent pieces 
+
 
       console.log('clicked at', index)
       
@@ -111,10 +122,12 @@ class Gameboard extends Component {
                 adjSum++
               }}
             catch(error){}
-  
+              
+            // code for pushing into flat array
             this.state.flatBoardArray.push(React.cloneElement( boardIndex[i][j], {adjacent: adjSum} ))
   
-    
+            this.state.boardArrayWithAdj[i].push(React.cloneElement( boardIndex[i][j], {adjacent: adjSum} ))
+
           }
         }
       }
@@ -123,7 +136,7 @@ class Gameboard extends Component {
 
       return ( <div className='gameBoard'>
 
-        {this.state.flatBoardArray}
+        {this.state.boardArrayWithAdj}
 
 
       </div> )

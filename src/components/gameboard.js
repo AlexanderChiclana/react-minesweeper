@@ -11,12 +11,25 @@ class Gameboard extends Component {
       flatBoardArray: []
     }
 
-    // reveal needs to happen at this level? 
+
+    revealBlanks = (index) => {
+        
+      const currentposition = this.state.boardArray[index[0]][index[1]]
+
+      // go through each one and check for revealed and 0, reveal the adjacent pieces 
+
+      console.log('clicked at', index)
+      
+    }
+
+
+
 
     render() { 
 
 
-     
+    // builds 2D array and fills with space components, necessary to preform logic 
+
       for (let i = 0; i < 8; i++) {
         this.state.boardArray.push([])
         for (let j = 0; j < 8; j++) {
@@ -25,7 +38,7 @@ class Gameboard extends Component {
             bomb = true
           }
           this.state.boardArray[i].push(
-            <Space key={i.toString() + j.toString()} bomb={bomb}/>
+            <Space key={i.toString() + j.toString()} bomb={bomb} revealBlanks={this.revealBlanks} index={[i,j]}/>
           )
         }
       }
@@ -33,130 +46,85 @@ class Gameboard extends Component {
       // seperate function to assign adjacent Number prop. Needs to iterate through 2d array, and perform logic check to count of adjacent slots with bomb
       
       
+      const assignNumbers = () => {
 
-      for (let i = 0; i < 8; i++) {
-        for (let j = 0; j < 8; j++) {
-          // console.log(i.toString() + j.toString())
-          // loops through each index of the 2d array. Need to sum all adjacent slots THEN pass count as prop 
-          const boardIndex = this.state.boardArray
-          let adjSum = 0
-
-          try{
-            if (
-              boardIndex[i][j + 1].props.bomb == true) {
-              adjSum++
-              // console.log('to the right of ',i.toString() + j.toString() , 'is a bomb')
-            }}
-          catch(error){}
-
-          try{
-            if (
-              boardIndex[i][j - 1].props.bomb == true) {
-              adjSum++
-              // console.log('to the left of ',i.toString() + j.toString() , 'is a bomb')
-            }}
-          catch(error){}
-
-          try{
-            if (
-              boardIndex[i - 1][j].props.bomb == true) {
-              adjSum++
-              // console.log('to the top of ',i.toString() + j.toString() , 'is a bomb')
-            }}
-          catch(error){}
-
-          
-          try{
-            if (
-              boardIndex[i + 1][j].props.bomb == true) {
-              adjSum++
-              // console.log('to the bottom of ',i.toString() + j.toString() , 'is a bomb')
-            }}
-          catch(error){}
-
-          try{
-            if (
-              boardIndex[i + 1][j + 1].props.bomb == true) {
-              adjSum++
-            }}
-          catch(error){}
-
-          try{
-            if (
-              boardIndex[i + 1][j - 1].props.bomb == true) {
-              adjSum++
-            }}
-          catch(error){}
-
-          try{
-            if (
-              boardIndex[i - 1][j + 1].props.bomb == true) {
-              adjSum++
-            }}
-          catch(error){}
-
-          try{
-            if (
-              boardIndex[i - 1][j - 1].props.bomb == true) {
-              adjSum++
-            }}
-          catch(error){}
-
-          this.state.flatBoardArray.push(React.cloneElement( boardIndex[i][j], {adjacent: adjSum} ))
-
-          // need to do this for every adj combo
-
-          
-
-          // console.log(boardIndex[i][j].props.bomb)
+        for (let i = 0; i < 8; i++) {
+          for (let j = 0; j < 8; j++) {
+            // console.log(i.toString() + j.toString())
+            // loops through each index of the 2d array. Need to sum all adjacent slots THEN pass count as prop 
+            const boardIndex = this.state.boardArray
+            let adjSum = 0
+  
+            try{
+              if (
+                boardIndex[i][j + 1].props.bomb == true) {
+                adjSum++
+              }}
+            catch(error){}
+  
+            try{
+              if (
+                boardIndex[i][j - 1].props.bomb == true) {
+                adjSum++
+              }}
+            catch(error){}
+  
+            try{
+              if (
+                boardIndex[i - 1][j].props.bomb == true) {
+                adjSum++
+              }}
+            catch(error){}
+  
+            
+            try{
+              if (
+                boardIndex[i + 1][j].props.bomb == true) {
+                adjSum++
+              }}
+            catch(error){}
+  
+            try{
+              if (
+                boardIndex[i + 1][j + 1].props.bomb == true) {
+                adjSum++
+              }}
+            catch(error){}
+  
+            try{
+              if (
+                boardIndex[i + 1][j - 1].props.bomb == true) {
+                adjSum++
+              }}
+            catch(error){}
+  
+            try{
+              if (
+                boardIndex[i - 1][j + 1].props.bomb == true) {
+                adjSum++
+              }}
+            catch(error){}
+  
+            try{
+              if (
+                boardIndex[i - 1][j - 1].props.bomb == true) {
+                adjSum++
+              }}
+            catch(error){}
+  
+            this.state.flatBoardArray.push(React.cloneElement( boardIndex[i][j], {adjacent: adjSum} ))
+  
+    
+          }
         }
       }
 
+      assignNumbers()
 
       return ( <div className='gameBoard'>
 
         {this.state.flatBoardArray}
 
-        {/* <Space bomb={true}/> 
-        <Space /> 
-        <Space bomb={true}/> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space bomb={true}/> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space /> 
-        <Space />  */}
 
       </div> )
     }

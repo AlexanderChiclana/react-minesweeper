@@ -3,19 +3,29 @@ import React, { Component } from 'react'
 class Space extends Component {
   state = {
     bomb: false,
-    adjacent: 0,
+    detonated: false,
     revealed: false
   };
   
   revealSquare = (event) => {
-    this.setState({revealed: true})
-    console.log(event.target)
+  
+    if (this.props.bomb === true) { 
+      this.setState({detonated: true})
+      alert('BOOM')
+    } else if (this.props.adjacent == 0){
+      this.props.revealBlanks(this.props.index)
+      this.setState({revealed: true})
+    }
+    
+    else {
+      this.setState({revealed: true})
+    }
 
-    this.props.bomb ? alert('bomb') : null
   }
 
   render() {
-    return ( <div className='space' onClick={this.revealSquare}> { this.state.revealed ? this.props.adjacent : 'SPACE' }</div>
+    return ( <div className='space' onClick={this.revealSquare}> { this.state.revealed ? this.props.adjacent : '' } 
+      {this.state.detonated ? 'BOOM' : null}</div>
     )
   }
 }

@@ -4,11 +4,11 @@ import Space from './space'
 
 class Gameboard extends Component {
     state = { 
-      xGrid: 0,
-      yGrid: 0,
+      xGrid: 8,
+      yGrid: 8,
 
       boardArray: [],
-      boardArrayWithAdj: [
+      loadedBoard: [
         [],
         [],
         [],
@@ -20,15 +20,20 @@ class Gameboard extends Component {
       ],
       flatBoardArray: []
     }
-
+ 
 
     revealBlanks = (index) => {
         
       const currentposition = this.state.boardArray[index[0]][index[1]]
-
+      
       // go through each one and check for revealed and 0, reveal the adjacent pieces 
 
+      // for (let i = 0; i < 8; i++) {
+      //   for (let j = 0; i < 8; j++) {
 
+      //     if (this.state.loadedBoard[i][j].props.adjacent == 0 // need to find away to see state)
+      //   }
+      // } 
       console.log('clicked at', index)
       
     }
@@ -124,9 +129,10 @@ class Gameboard extends Component {
             catch(error){}
               
             // code for pushing into flat array
-            this.state.flatBoardArray.push(React.cloneElement( boardIndex[i][j], {adjacent: adjSum} ))
+            // this.state.flatBoardArray.push(React.cloneElement( boardIndex[i][j], {adjacent: adjSum} ))
   
-            this.state.boardArrayWithAdj[i].push(React.cloneElement( boardIndex[i][j], {adjacent: adjSum} ))
+            // code for pushing into 2D array 
+            this.state.loadedBoard[i].push(React.cloneElement( boardIndex[i][j], {adjacent: adjSum} ))
 
           }
         }
@@ -136,7 +142,7 @@ class Gameboard extends Component {
 
       return ( <div className='gameBoard'>
 
-        {this.state.boardArrayWithAdj}
+        {this.state.loadedBoard}
 
 
       </div> )

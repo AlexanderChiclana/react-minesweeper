@@ -6,6 +6,7 @@ class Gameboard extends Component {
     state = { 
       xGrid: 8,
       yGrid: 8,
+      bombFrequency: 2,
 
       boardArray: [],
       loadedBoard: [
@@ -17,14 +18,13 @@ class Gameboard extends Component {
         [],
         [],
         []
-      ],
-      flatBoardArray: []
+      ]    
     }
  
 
     revealBlanks = (index) => {
         
-      const currentposition = this.state.boardArray[index[0]][index[1]]
+      // const currentposition = this.state.boardArray[index[0]][index[1]]
       
       // go through each one and check for revealed and 0, reveal the adjacent pieces 
 
@@ -46,11 +46,12 @@ class Gameboard extends Component {
 
     // builds 2D array and fills with space components, necessary to preform logic 
 
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < this.state.yGrid; i++) {
         this.state.boardArray.push([])
-        for (let j = 0; j < 8; j++) {
+        for (let j = 0; j < this.state.xGrid; j++) {
           let bomb = false
-          if (Math.floor(Math.random() * 11) > 8 ) {
+          if (Math.floor(Math.random() * 11) < this.state.bombFrequency) {
+            // adjust frequency of bombs by lowering condition 
             bomb = true
           }
           this.state.boardArray[i].push(
@@ -64,8 +65,8 @@ class Gameboard extends Component {
       
       const assignNumbers = () => {
 
-        for (let i = 0; i < 8; i++) {
-          for (let j = 0; j < 8; j++) {
+        for (let i = 0; i < this.state.yGrid; i++) {
+          for (let j = 0; j < this.state.xGrid; j++) {
             // console.log(i.toString() + j.toString())
             // loops through each index of the 2d array. Need to sum all adjacent slots THEN pass count as prop 
             const boardIndex = this.state.boardArray

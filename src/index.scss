@@ -1,13 +1,13 @@
+:root {
+  --rowNum: 8;
+  --colNum: 8;
+  --boxSize: 100px;
+}
+
 body {
   font-family: sans-serif;
   margin: 0;
   padding: 0;
-}
-
-.gameBoard {
-  display: grid;
-  grid-template-rows: 100px 100px 100px 100px 100px 100px 100px 100px ;
-  grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px ;
 }
 
 .space {

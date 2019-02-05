@@ -4,21 +4,14 @@ import Space from './space'
 
 class Gameboard extends Component {
     state = { 
-      xGrid: 8,
-      yGrid: 8,
+      xGrid: 16,
+      yGrid: 16,
+      boxSize: 50,
+
       bombFrequency: 2,
 
       boardArray: [],
-      loadedBoard: [
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        []
-      ]    
+      loadedBoard: []    
     }
  
 
@@ -48,6 +41,8 @@ class Gameboard extends Component {
 
       for (let i = 0; i < this.state.yGrid; i++) {
         this.state.boardArray.push([])
+        this.state.loadedBoard.push([])
+
         for (let j = 0; j < this.state.xGrid; j++) {
           let bomb = false
           if (Math.floor(Math.random() * 11) < this.state.bombFrequency) {
@@ -141,12 +136,19 @@ class Gameboard extends Component {
 
       assignNumbers()
 
-      return ( <div className='gameBoard'>
+      
+      return ( 
+      
+        <div className='gameBoard' 
+          style={ 
+            {display: 'grid',
+              gridTemplateRows: `repeat(${this.state.xGrid}, ${this.state.boxSize}px)`,
+              gridTemplateColumns: `repeat(${this.state.yGrid}, ${this.state.boxSize}px)`}}>
+   
+          {this.state.loadedBoard}
 
-        {this.state.loadedBoard}
 
-
-      </div> )
+        </div> )
     }
 }
  

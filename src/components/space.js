@@ -19,6 +19,8 @@ class Space extends Component {
     
     else {
       this.setState({revealed: true})
+
+      this.props.revealBlanks(this.props.index)
     }
 
   }

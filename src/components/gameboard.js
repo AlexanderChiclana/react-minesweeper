@@ -4,11 +4,11 @@ import Space from './space'
 
 class Gameboard extends Component {
     state = { 
-      xGrid: 16,
-      yGrid: 16,
-      boxSize: 50,
+      xGrid: 10,
+      yGrid: 10,
+      boxSize: 80,
 
-      bombFrequency: 2,
+      bombFrequency: 3,
 
       boardArray: [],
       loadedBoard: []    
@@ -142,8 +142,8 @@ class Gameboard extends Component {
         <div className='gameBoard' 
           style={ 
             {display: 'grid',
-              gridTemplateRows: `repeat(${this.state.xGrid}, ${this.state.boxSize}px)`,
-              gridTemplateColumns: `repeat(${this.state.yGrid}, ${this.state.boxSize}px)`}}>
+              gridTemplateRows: `repeat(${this.state.yGrid}, ${this.state.boxSize}px)`,
+              gridTemplateColumns: `repeat(${this.state.xGrid}, ${this.state.boxSize}px)`}}>
    
           {this.state.loadedBoard}
 

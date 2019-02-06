@@ -29,8 +29,12 @@ class Space extends Component {
     }
   }
 
+  localReveal = () => {
+    this.props.revealSquare(this.props.rowIndex, this.props.columnIndex)
+  }
+
   render() {
-    return ( <div className='space' onClick={this.revealSquare}> { this.props.revealed ? this.props.adjacent : '' } 
+    return ( <div className='space' onClick={this.localReveal}> { this.props.revealed ? this.props.adjacent : '' } 
       {this.props.detonated ? 'BOOM' : null}</div>
     )
   }

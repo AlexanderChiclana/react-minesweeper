@@ -17,11 +17,27 @@ class Gameboard extends Component {
       gameActive: true    
     }
   }
-    
+  
+  revealSquare = (i, j) => {
+    console.log('hey', i, j)
+
+    this.setState(prevState => {
+      const boardArray = [...prevState.boardArray]
+
+      if (boardArray[i][j].bomb){
+        boardArray[i][j].detonated = true
+      } else {
+        boardArray[i][j].revealed = true
+      }
+
+
+      return {...prevState, ...{ boardArray }}
+    })
+  }
     
   componentWillMount(){
     // builds 2D array and fills with space components, necessary to preform logic 
-
+    
     for (let i = 0; i < this.state.yGrid; i++) {
       this.state.boardArray.push([])
       this.state.loadedBoard.push([])
@@ -163,7 +179,7 @@ class Gameboard extends Component {
 
       const loadedBoard = this.state.boardArray.map((row, rowIndex) => {
         return row.map((spaceData, columnIndex) => {
-          return <Space key={`${rowIndex}${columnIndex}`} {...spaceData} revealBlanks={this.revealBlanks} />
+          return <Space key={`${rowIndex}${columnIndex}`} {...spaceData} revealBlanks={this.revealBlanks} revealSquare={this.revealSquare} rowIndex={rowIndex} columnIndex={columnIndex}/>
         } )
       })
 

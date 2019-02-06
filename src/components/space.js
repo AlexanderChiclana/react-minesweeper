@@ -1,33 +1,37 @@
 import React, { Component } from 'react'
 
 class Space extends Component {
-  state = {
-    bomb: false,
-    detonated: false,
-    revealed: false
-  };
+  // state = {
+  //   bomb: false,
+  //   detonated: false,
+  //   revealed: false
+  // };
   
-  revealSquare = (event) => {
+  revealSquare = () => {
+    if (this.props.gameActive) { 
+      if (this.props.bomb === true) { 
+        this.setState({detonated: true})
+        alert('BOOM')
+        this.props.gameOverEvent()
   
-    if (this.props.bomb === true) { 
-      this.setState({detonated: true})
-      alert('BOOM')
-    } else if (this.props.adjacent == 0){
-      this.props.revealBlanks(this.props.index)
-      this.setState({revealed: true})
+      } else if (this.props.adjacent == 0){
+        this.props.revealBlanks(this.props.index)
+        this.setState({revealed: true})
+      }
+      
+      else {
+        this.setState({revealed: true})
+  
+        this.props.revealBlanks(this.props.index)
+      }
+    } else {
+      console.log('game is over kid')
     }
-    
-    else {
-      this.setState({revealed: true})
-
-      this.props.revealBlanks(this.props.index)
-    }
-
   }
 
   render() {
-    return ( <div className='space' onClick={this.revealSquare}> { this.state.revealed ? this.props.adjacent : '' } 
-      {this.state.detonated ? 'BOOM' : null}</div>
+    return ( <div className='space' onClick={this.revealSquare}> { this.props.revealed ? this.props.adjacent : '' } 
+      {this.props.detonated ? 'BOOM' : null}</div>
     )
   }
 }

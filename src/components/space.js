@@ -7,30 +7,32 @@ class Space extends Component {
   //   revealed: false
   // };
   
-  revealSquare = () => {
-    if (this.props.gameActive) { 
-      if (this.props.bomb === true) { 
-        this.setState({detonated: true})
-        alert('BOOM')
-        this.props.gameOverEvent()
+  // revealSquare = () => {
+  //   if (this.props.gameActive) { 
+  //     if (this.props.bomb === true) { 
+  //       this.setState({detonated: true})
+  //       alert('BOOM')
+  //       this.props.gameOverEvent()
   
-      } else if (this.props.adjacent == 0){
-        this.props.revealBlanks(this.props.index)
-        this.setState({revealed: true})
-      }
+  //     } else if (this.props.adjacent == 0){
+  //       this.props.revealBlanks(this.props.index)
+  //       this.setState({revealed: true})
+  //     }
       
-      else {
-        this.setState({revealed: true})
+  //     else {
+  //       this.setState({revealed: true})
   
-        this.props.revealBlanks(this.props.index)
-      }
-    } else {
-      console.log('game is over kid')
-    }
-  }
+  //       this.props.revealBlanks(this.props.index)
+  //     }
+  //   } else {
+  //     console.log('game is over kid')
+  //   }
+  // }
 
   localReveal = () => {
     this.props.revealSquare(this.props.rowIndex, this.props.columnIndex)
+
+    this.props.revealBlanks()
   }
 
   render() {

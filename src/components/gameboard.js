@@ -6,11 +6,11 @@ class Gameboard extends Component {
   constructor(props) {
     super(props)
     this.state = { 
-      xGrid: 20,
-      yGrid: 15,
-      boxSize: 50,
+      xGrid: 10,
+      yGrid: 10,
+      boxSize: 80,
 
-      bombFrequency: 3,
+      bombFrequency: 1,
 
       boardArray: [],
       loadedBoard: [],
@@ -34,6 +34,35 @@ class Gameboard extends Component {
       return {...prevState, ...{ boardArray }}
     })
   }
+
+  revealBlanks = () => {
+  
+    for (let x = 0; x < (this.state.xGrid + this.state.yGrid); x++){
+      for (let i = 0; i < this.state.yGrid; i++) {
+        for (let j = 0; j < this.state.xGrid; j++) {
+
+          this.setState(prevState => {
+            const boardArray = [...prevState.boardArray]
+          
+            if (boardArray[i][j].adjacent == 0 && boardArray[i][j].revealed) {
+              try{boardArray[i - 1][j + 1].revealed = true }catch(error){}
+              try{boardArray[i - 1][j].revealed = true }catch(error){}
+              try{boardArray[i - 1][j - 1].revealed = true }catch(error){}
+              try{boardArray[i + 1][j + 1].revealed = true }catch(error){}
+              try{boardArray[i + 1][j].revealed = true }catch(error){}
+              try{boardArray[i + 1][j - 1].revealed = true }catch(error){}
+              try{boardArray[i][j + 1].revealed = true  }catch(error){}
+              try{boardArray[i][j - 1].revealed = true     }catch(error){}        
+            }
+            return {...prevState, ...{ boardArray }}
+          })
+        }
+      }
+    }
+  }
+  
+    
+  
     
   componentWillMount(){
     // builds 2D array and fills with space components, necessary to preform logic 
@@ -152,21 +181,7 @@ class Gameboard extends Component {
     assignNumbers()
   }
 
-    revealBlanks = (index) => {
-        
-      // const currentposition = this.state.boardArray[index[0]][index[1]]
-      
-      // go through each one and check for revealed and 0, reveal the adjacent pieces 
-
-      // for (let i = 0; i < 8; i++) {
-      //   for (let j = 0; i < 8; j++) {
-
-      //     if (this.state.loadedBoard[i][j].props.adjacent == 0 // need to find away to see state)
-      //   }
-      // } 
-      console.log('clicked at', index)
-      
-    }
+ 
 
     gameOverEvent = () => {
       console.log('game over')

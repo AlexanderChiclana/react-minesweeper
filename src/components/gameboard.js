@@ -6,14 +6,15 @@ class Gameboard extends Component {
   constructor(props) {
     super(props)
     this.state = { 
-      xGrid: 10,
-      yGrid: 10,
+      xGrid: 4,
+      yGrid: 4,
       boxSize: 80,
 
       bombFrequency: 2,
 
       boardArray: [],
-      gameActive: true    
+      playerLost: false,
+      playerWon: false
     }
   }
   
@@ -32,7 +33,8 @@ class Gameboard extends Component {
       return {...prevState, ...{ boardArray }}
     })
 
-    this.state.boardArray[i][j].bomb ? this.setState({gameActive : false}) : null
+    // checks to see if the player has lost 
+    this.state.boardArray[i][j].bomb ? this.setState({playerLost : true}) : null
   
   }
 
@@ -61,7 +63,7 @@ class Gameboard extends Component {
       }
     }
 
-    this.checkForEnd()
+    // this.checkForWin()
     
   }
   
@@ -184,55 +186,62 @@ class Gameboard extends Component {
     assignNumbers()
   }
 
- 
+  componentWillUpdate(){
 
-    checkForEnd = () => {
-      // need to write function that checks for wins and losses 
-      const checkForLoss = (space) => {
-        return space
-      }
-
-      this.state.boardArray.forEach(function(subArray, index){
-        // for each array I want to use the some method to check to see if any obj 
-        // contains the value of detonated 
-
-        subArray.some(checkForLoss) ? console.log('LOSER') : console.log('NOT OVER')
-      })
-      
-       
-      
-
-    }
-
-
-    render() { 
-
-
-      const componentBoard = this.state.boardArray.map((row, rowIndex) => {
-        return row.map((spaceData, columnIndex) => {
-          return <Space key={`${rowIndex}${columnIndex}`} {...spaceData} revealBlanks={this.revealBlanks} revealSquare={this.revealSquare} rowIndex={rowIndex} columnIndex={columnIndex}/>
-        } )
-      })
-
-
-      
-      return ( 
-        
-        <div>
-          <h1>Minesweeper</h1>
-          <div className='gameBoard' 
-            style={ 
-              {display: 'grid',
-                gridTemplateRows: `repeat(${this.state.yGrid}, ${this.state.boxSize}px)`,
-                gridTemplateColumns: `repeat(${this.state.xGrid}, ${this.state.boxSize}px)`}}>
    
-            {componentBoard}
+    // need to write function that checks for wins and losses 
+    let playedPieces = 0
+    console.log(this.state.xGrid * this.state.yGrid)
 
 
-          </div> 
-        </div>
-      )
+ 
+    this.state.boardArray.forEach(function(subArray, index){
+      // for each array I want to use the some method to check to see if any obj 
+      // contains the value of detonated 
+      subArray.forEach(function(space, spaceIndex){
+        if(space.revealed || space.bomb){
+          playedPieces++
+        }
+      })
+    })
+
+    if(playedPieces == (this.state.xGrid * this.state.yGrid)) {
+      console.log('WINNER WINNER')
     }
+
+
+    console.log(playedPieces)
+    
+  }
+
+  render() { 
+
+
+    const componentBoard = this.state.boardArray.map((row, rowIndex) => {
+      return row.map((spaceData, columnIndex) => {
+        return <Space key={`${rowIndex}${columnIndex}`} {...spaceData} revealBlanks={this.revealBlanks} revealSquare={this.revealSquare} rowIndex={rowIndex} columnIndex={columnIndex}/>
+      } )
+    })
+
+
+      
+    return ( 
+        
+      <div>
+        <h1>Minesweeper</h1>
+        <div className='gameBoard' 
+          style={ 
+            {display: 'grid',
+              gridTemplateRows: `repeat(${this.state.yGrid}, ${this.state.boxSize}px)`,
+              gridTemplateColumns: `repeat(${this.state.xGrid}, ${this.state.boxSize}px)`}}>
+  
+          {componentBoard}
+
+
+        </div> 
+      </div>
+    )
+  }
 }
 
  

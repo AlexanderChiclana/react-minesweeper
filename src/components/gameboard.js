@@ -10,16 +10,14 @@ class Gameboard extends Component {
       yGrid: 10,
       boxSize: 80,
 
-      bombFrequency: 1,
+      bombFrequency: 2,
 
       boardArray: [],
-      loadedBoard: [],
       gameActive: true    
     }
   }
   
   revealSquare = (i, j) => {
-    console.log('hey', i, j)
 
     this.setState(prevState => {
       const boardArray = [...prevState.boardArray]
@@ -30,9 +28,12 @@ class Gameboard extends Component {
         boardArray[i][j].revealed = true
       }
 
-
+    
       return {...prevState, ...{ boardArray }}
     })
+
+    this.state.boardArray[i][j].bomb ? this.setState({gameActive : false}) : null
+  
   }
 
   revealBlanks = () => {
@@ -59,6 +60,9 @@ class Gameboard extends Component {
         }
       }
     }
+
+    this.checkForEnd()
+    
   }
   
     
@@ -69,7 +73,6 @@ class Gameboard extends Component {
     
     for (let i = 0; i < this.state.yGrid; i++) {
       this.state.boardArray.push([])
-      this.state.loadedBoard.push([])
 
       for (let j = 0; j < this.state.xGrid; j++) {
         let bomb = false
@@ -183,16 +186,29 @@ class Gameboard extends Component {
 
  
 
-    gameOverEvent = () => {
-      console.log('game over')
-      this.setState({gameActive: false})
+    checkForEnd = () => {
+      // need to write function that checks for wins and losses 
+      const checkForLoss = (space) => {
+        return space
+      }
+
+      this.state.boardArray.forEach(function(subArray, index){
+        // for each array I want to use the some method to check to see if any obj 
+        // contains the value of detonated 
+
+        subArray.some(checkForLoss) ? console.log('LOSER') : console.log('NOT OVER')
+      })
+      
+       
+      
+
     }
 
 
     render() { 
 
 
-      const loadedBoard = this.state.boardArray.map((row, rowIndex) => {
+      const componentBoard = this.state.boardArray.map((row, rowIndex) => {
         return row.map((spaceData, columnIndex) => {
           return <Space key={`${rowIndex}${columnIndex}`} {...spaceData} revealBlanks={this.revealBlanks} revealSquare={this.revealSquare} rowIndex={rowIndex} columnIndex={columnIndex}/>
         } )
@@ -210,7 +226,7 @@ class Gameboard extends Component {
                 gridTemplateRows: `repeat(${this.state.yGrid}, ${this.state.boxSize}px)`,
                 gridTemplateColumns: `repeat(${this.state.xGrid}, ${this.state.boxSize}px)`}}>
    
-            {loadedBoard}
+            {componentBoard}
 
 
           </div> 

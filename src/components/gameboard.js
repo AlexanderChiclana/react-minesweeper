@@ -6,11 +6,11 @@ class Gameboard extends Component {
   constructor(props) {
     super(props)
     this.state = { 
-      xGrid: 4,
-      yGrid: 4,
-      boxSize: 80,
+      xGrid: 10,
+      yGrid: 10,
+      boxSize: 70,
 
-      bombFrequency: 2,
+      bombFrequency: 1,
 
       boardArray: [],
       playerLost: false,
@@ -207,6 +207,7 @@ class Gameboard extends Component {
 
     if(playedPieces == (this.state.xGrid * this.state.yGrid)) {
       console.log('WINNER WINNER')
+      alert('YOU HAVE WON')
     }
 
 
@@ -219,7 +220,7 @@ class Gameboard extends Component {
 
     const componentBoard = this.state.boardArray.map((row, rowIndex) => {
       return row.map((spaceData, columnIndex) => {
-        return <Space key={`${rowIndex}${columnIndex}`} {...spaceData} revealBlanks={this.revealBlanks} revealSquare={this.revealSquare} rowIndex={rowIndex} columnIndex={columnIndex}/>
+        return <Space key={`${rowIndex}${columnIndex}`} {...spaceData} revealBlanks={this.revealBlanks} revealSquare={this.revealSquare} rowIndex={rowIndex} columnIndex={columnIndex} boxSize={this.state.boxSize}/>
       } )
     })
 

@@ -20,7 +20,10 @@
       "error",
       "single"
     ],
-    "indent": ["error", 2],
+    "space-before-function-paren": "off",
+    "no-multiple-empty-lines": "off", 
+    "no-trailing-spaces":"off",
+    "indent": "off",
     "react/prop-types": [0]
   }
 }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import Space from './space'
+import Button from '@material-ui/core/Button'
+
 
 
 class Gameboard extends Component {
@@ -86,17 +88,9 @@ class Gameboard extends Component {
           bomb = true
         }
 
-
-
         this.state.boardArray[i].push(
-          // method for filling array with react components, commenting out to test out regular JS objects
-          // <Space key={i.toString() + j.toString()} bomb={bomb} revealBlanks={this.revealBlanks} index={[i,j]} gameOverEvent={this.gameOverEvent} gameActive={this.state.gameActive}/>
-
           { key: i.toString() + j.toString(), bomb: bomb, index: [i,j], revealed: false }
         )
-
-
-
       }
     }
 
@@ -168,15 +162,7 @@ class Gameboard extends Component {
               adjSum++
             }}
           catch(error){}
-            
-          // code for pushing into flat array
-          // this.state.flatBoardArray.push(React.cloneElement( boardIndex[i][j], {adjacent: adjSum} ))
-
-          // code for pushing into 2D array 
-
-          // original line for cloning with adj number
-          // this.state.loadedBoard[i].push(React.cloneElement( boardIndex[i][j], {adjacent: adjSum} ))
-
+  
           this.setState(prevState => {
             const boardArray = [...prevState.boardArray]
             boardArray[i][j].adjacent = adjSum
@@ -224,7 +210,7 @@ class Gameboard extends Component {
     this.state.playerLost ? alert('bro its over') : null
   }
   
-  
+ 
 
   render() { 
 
@@ -249,9 +235,10 @@ class Gameboard extends Component {
   
           {componentBoard}
 
-
         </div> 
-        
+        <Button variant="contained" color="primary">
+           Reset Game
+         </Button>
       </div>
     )
   }

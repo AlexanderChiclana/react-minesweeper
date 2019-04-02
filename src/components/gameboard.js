@@ -8,12 +8,6 @@ class Gameboard extends Component {
   constructor(props) {
     super(props)
     this.state = { 
-      xGrid: 4,
-      yGrid: 4,
-      boxSize: 70,
-
-      bombFrequency: 1,
-
       boardArray: [],
       playerLost: false,
       playerWon: false
@@ -45,9 +39,9 @@ class Gameboard extends Component {
 
   revealBlanks = () => {
   
-    for (let x = 0; x < (this.state.xGrid + this.state.yGrid); x++){
-      for (let i = 0; i < this.state.yGrid; i++) {
-        for (let j = 0; j < this.state.xGrid; j++) {
+    for (let x = 0; x < (this.props.xGrid + this.props.yGrid); x++){
+      for (let i = 0; i < this.props.yGrid; i++) {
+        for (let j = 0; j < this.props.xGrid; j++) {
 
           this.setState(prevState => {
             const boardArray = [...prevState.boardArray]
@@ -72,107 +66,130 @@ class Gameboard extends Component {
     
   }
   
+  clearBoard = () => {
+    this.setState({  
+      boardArray: [],
+      playerLost: false,
+      playerWon: false
+    })
+  }
+
+  buildBoard = () => {
+   for (let i = 0; i < this.props.yGrid; i++) {
+    this.state.boardArray.push([])
+   }
+  }
+
+  fillBoard = () => {
+  //  this.clearBoard()
+
+   // builds 2D array and fills with space components, necessary to preform logic 
+
+   for (let i = 0; i < this.props.yGrid; i++) {
+    // this.state.boardArray.push([])
+
+
+    for (let j = 0; j < this.props.xGrid; j++) {
+      let bomb = false
+      if (Math.floor(Math.random() * 11) < this.props.bombFrequency) {
+        // adjust frequency of bombs by lowering condition 
+        bomb = true
+      }
+
+      this.state.boardArray[i].push(
+        { key: i.toString() + j.toString(), bomb: bomb, index: [i,j], revealed: false, adjacent: 0 }
+      )
+    }
+  }
+  // assigns adjacent Number prop. Needs to iterate through 2d array, and perform logic check to count of adjacent slots with bomb
+    for (let i = 0; i < this.props.yGrid; i++) {
+      for (let j = 0; j < this.props.xGrid; j++) {
+        // console.log(i.toString() + j.toString())
+        // loops through each index of the 2d array. Need to sum all adjacent slots THEN pass count as prop 
+        const boardIndex = this.state.boardArray
+        let adjSum = 0
+
+        try{
+          if (
+            boardIndex[i][j + 1].bomb == true) {
+            adjSum++
+          }}
+        catch(error){}
+
+        try{
+          if (
+            boardIndex[i][j - 1].bomb == true) {
+            adjSum++
+          }}
+        catch(error){}
+
+        try{
+          if (
+            boardIndex[i - 1][j].bomb == true) {
+            adjSum++
+          }}
+        catch(error){}
+
+        
+        try{
+          if (
+            boardIndex[i + 1][j].bomb == true) {
+            adjSum++
+          }}
+        catch(error){}
+
+        try{
+          if (
+            boardIndex[i + 1][j + 1].bomb == true) {
+            adjSum++
+          }}
+        catch(error){}
+
+        try{
+          if (
+            boardIndex[i + 1][j - 1].bomb == true) {
+            adjSum++
+          }}
+        catch(error){}
+
+        try{
+          if (
+            boardIndex[i - 1][j + 1].bomb == true) {
+            adjSum++
+          }}
+        catch(error){}
+
+        try{
+          if (
+            boardIndex[i - 1][j - 1].bomb == true) {
+            adjSum++
+          }}
+        catch(error){}
+
+        this.setState(prevState => {
+          const boardArray = [...prevState.boardArray]
+          boardArray[i][j].adjacent = adjSum
+          return {...prevState, ...{ boardArray }}
+        })
+       }
+     }
+   }
     
-  
-    
+  resetGame = () => {
+    // this.clearBoard()
+    // this.buildBoard()
+    // this.fillBoard()
+  }
+
   componentWillMount(){
-    // builds 2D array and fills with space components, necessary to preform logic 
-    
-    for (let i = 0; i < this.state.yGrid; i++) {
-      this.state.boardArray.push([])
-
-      for (let j = 0; j < this.state.xGrid; j++) {
-        let bomb = false
-        if (Math.floor(Math.random() * 11) < this.state.bombFrequency) {
-          // adjust frequency of bombs by lowering condition 
-          bomb = true
-        }
-
-        this.state.boardArray[i].push(
-          { key: i.toString() + j.toString(), bomb: bomb, index: [i,j], revealed: false }
-        )
-      }
-    }
-
-    // seperate function to assign adjacent Number prop. Needs to iterate through 2d array, and perform logic check to count of adjacent slots with bomb
-    
-    
-    const assignNumbers = () => {
-
-      for (let i = 0; i < this.state.yGrid; i++) {
-        for (let j = 0; j < this.state.xGrid; j++) {
-          // console.log(i.toString() + j.toString())
-          // loops through each index of the 2d array. Need to sum all adjacent slots THEN pass count as prop 
-          const boardIndex = this.state.boardArray
-          let adjSum = 0
-
-          try{
-            if (
-              boardIndex[i][j + 1].bomb == true) {
-              adjSum++
-            }}
-          catch(error){}
-
-          try{
-            if (
-              boardIndex[i][j - 1].bomb == true) {
-              adjSum++
-            }}
-          catch(error){}
-
-          try{
-            if (
-              boardIndex[i - 1][j].bomb == true) {
-              adjSum++
-            }}
-          catch(error){}
-
-          
-          try{
-            if (
-              boardIndex[i + 1][j].bomb == true) {
-              adjSum++
-            }}
-          catch(error){}
-
-          try{
-            if (
-              boardIndex[i + 1][j + 1].bomb == true) {
-              adjSum++
-            }}
-          catch(error){}
-
-          try{
-            if (
-              boardIndex[i + 1][j - 1].bomb == true) {
-              adjSum++
-            }}
-          catch(error){}
-
-          try{
-            if (
-              boardIndex[i - 1][j + 1].bomb == true) {
-              adjSum++
-            }}
-          catch(error){}
-
-          try{
-            if (
-              boardIndex[i - 1][j - 1].bomb == true) {
-              adjSum++
-            }}
-          catch(error){}
-  
-          this.setState(prevState => {
-            const boardArray = [...prevState.boardArray]
-            boardArray[i][j].adjacent = adjSum
-            return {...prevState, ...{ boardArray }}
-          })
-
-        }
-      }
-    }
-    assignNumbers()
+  //  this.setState({
+  //   xGrid: 6,
+  //   yGrid: 6,
+  //   boxSize: 70,
+  //   bombFrequency: 2,
+  //  })
+   this.buildBoard()
+   this.fillBoard()
   }
 
   componentWillUpdate(){
@@ -180,7 +197,7 @@ class Gameboard extends Component {
    
     // need to write function that checks for wins and losses 
     let playedPieces = 0
-    console.log(this.state.xGrid * this.state.yGrid)
+    console.log(this.props.xGrid * this.props.yGrid)
 
 
  
@@ -195,7 +212,7 @@ class Gameboard extends Component {
       })
     })
 
-    if(playedPieces == (this.state.xGrid * this.state.yGrid)) {
+    if(playedPieces == (this.props.xGrid * this.props.yGrid)) {
       console.log('WINNER WINNER')
       alert('YOU HAVE WON')
     }
@@ -217,7 +234,7 @@ class Gameboard extends Component {
 
     const componentBoard = this.state.boardArray.map((row, rowIndex) => {
       return row.map((spaceData, columnIndex) => {
-        return <Space key={`${rowIndex}${columnIndex}`} {...spaceData} revealBlanks={this.revealBlanks} revealSquare={this.revealSquare} rowIndex={rowIndex} columnIndex={columnIndex} boxSize={this.state.boxSize}/>
+        return <Space key={`${rowIndex}${columnIndex}`} {...spaceData} revealBlanks={this.revealBlanks} revealSquare={this.revealSquare} rowIndex={rowIndex} columnIndex={columnIndex} boxSize={this.props.boxSize}/>
       } )
     })
 
@@ -229,16 +246,16 @@ class Gameboard extends Component {
         <h1>Minesweeper</h1>
         <div className='gameBoard' 
           style={ 
-            {display: 'grid',
-              gridTemplateRows: `repeat(${this.state.yGrid}, ${this.state.boxSize}px)`,
-              gridTemplateColumns: `repeat(${this.state.xGrid}, ${this.state.boxSize}px)`}}>
+          {display: 'grid',
+              gridTemplateRows: `repeat(${this.props.yGrid}, ${this.props.boxSize}px)`,
+              gridTemplateColumns: `repeat(${this.props.xGrid}, ${this.props.boxSize}px)`}}>
   
           {componentBoard}
 
         </div> 
-        <Button variant="contained" color="primary">
+        {/* <Button variant="contained" color="primary" onClick={this.resetGame}>
            Reset Game
-         </Button>
+         </Button> */}
       </div>
     )
   }

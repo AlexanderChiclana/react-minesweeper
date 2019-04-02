@@ -7,29 +7,7 @@ class Space extends Component {
       backgroundColor: '#444'
     } 
   }
-  // revealSquare = () => {
-  //   if (this.props.gameActive) { 
-  //     if (this.props.bomb === true) { 
-  //       this.setState({detonated: true})
-  //       alert('BOOM')
-  //       this.props.gameOverEvent()
-  
-  //     } else if (this.props.adjacent == 0){
-  //       this.props.revealBlanks(this.props.index)
-  //       this.setState({revealed: true})
-  //     }
-      
-  //     else {
-  //       this.setState({revealed: true})
-  
-  //       this.props.revealBlanks(this.props.index)
-  //     }
-  //   } else {
-  //     console.log('game is over kid')
-  //   }
-  // }
-
-
+ 
 
 
   localReveal = () => {
@@ -83,7 +61,7 @@ class Space extends Component {
     return ( <div className='space' onClick={this.localReveal} style={{background: backgroundColor, color: color, fontWeight: 'bold', fontSize: this.props.boxSize/2
     }}> 
       {this.props.revealed ? value : '' } 
-      {this.props.detonated ? 'BOOM' : null}</div>
+      {this.props.detonated ? '💥' : null}</div>
     )
   }
 }

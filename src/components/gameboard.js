@@ -6,8 +6,8 @@ class Gameboard extends Component {
   constructor(props) {
     super(props)
     this.state = { 
-      xGrid: 10,
-      yGrid: 10,
+      xGrid: 4,
+      yGrid: 4,
       boxSize: 70,
 
       bombFrequency: 1,
@@ -22,15 +22,18 @@ class Gameboard extends Component {
 
     this.setState(prevState => {
       const boardArray = [...prevState.boardArray]
-
-      if (boardArray[i][j].bomb){
-        boardArray[i][j].detonated = true
-      } else {
-        boardArray[i][j].revealed = true
+      if (!prevState.playerLost){
+        // condition if game is still active, detonates / reveals 
+        if (boardArray[i][j].bomb){
+          boardArray[i][j].detonated = true
+        } else {
+          boardArray[i][j].revealed = true
+        }
+  
+        return {...prevState, ...{ boardArray }}
+      }else{
+        console.log('its ovah')
       }
-
-    
-      return {...prevState, ...{ boardArray }}
     })
 
     // checks to see if the player has lost 
@@ -202,6 +205,7 @@ class Gameboard extends Component {
         if(space.revealed || space.bomb){
           playedPieces++
         }
+      
       })
     })
 
@@ -214,6 +218,13 @@ class Gameboard extends Component {
     console.log(playedPieces)
     
   }
+
+  
+  componentDidUpdate(prevProps, prevState) {
+    this.state.playerLost ? alert('bro its over') : null
+  }
+  
+  
 
   render() { 
 
@@ -240,6 +251,7 @@ class Gameboard extends Component {
 
 
         </div> 
+        
       </div>
     )
   }

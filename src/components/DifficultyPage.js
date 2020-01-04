@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid'
 import Fab from '@material-ui/core/Fab'
 import NavigationIcon from '@material-ui/icons/Navigation'
 import { Link } from 'react-router-dom'
-
+import CustomGame from './CustomGame'
 
 
 const styles = {
@@ -47,7 +47,7 @@ function SimpleCard(props) {
   return (
     <div className={classes.root}>
 
-<Grid container
+{/* <Grid container
   spacing={0}
   direction="column"
   alignItems="center"
@@ -65,12 +65,12 @@ function SimpleCard(props) {
     Choose a difficulty, or create your own
     </Typography>
     </Grid>
-</Grid>
+</Grid> */}
 
 
     <Grid container spacing={8}>
 
-    <Grid item xs={12} sm={6} lg={4} xl={4}>
+    <Grid item xs={12} sm={6} lg={3} xl={3}>
 
     <Card className={classes.card}>
       <CardContent>
@@ -102,7 +102,7 @@ function SimpleCard(props) {
     </Card>
     </Grid>
 
-    <Grid item xs={12} sm={6} lg={4} xl={4}>
+    <Grid item xs={12} sm={6} lg={3} xl={3}>
 <Card className={classes.card}>
   <CardContent>
     <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -133,7 +133,7 @@ function SimpleCard(props) {
 </Card>
 </Grid>
 
-<Grid item xs={12} sm={6} lg={4} xl={4}>
+<Grid item xs={12} sm={6} lg={3} xl={3}>
 <Card className={classes.card}>
   <CardContent>
     <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -165,7 +165,7 @@ function SimpleCard(props) {
 </Grid>
 
 
-<Grid item xs={12} sm={6} lg={4} xl={4}>
+{/* <Grid item xs={12} sm={6} lg={3} xl={3}>
 <Card className={classes.card}>
   <CardContent>
     <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -192,7 +192,8 @@ function SimpleCard(props) {
 
     </CardActions>
 </Card>
-</Grid>
+</Grid> */}
+    <CustomGame />
     </Grid>
     </div>
   )

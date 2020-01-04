@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import Space from './space'
 import Button from '@material-ui/core/Button'
-
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
 
 
 class Gameboard extends Component {
@@ -224,7 +225,7 @@ class Gameboard extends Component {
 
   
   componentDidUpdate(prevProps, prevState) {
-    this.state.playerLost ? alert('bro its over') : null
+    // this.state.playerLost ? alert('bro its over') : null
   }
   
  
@@ -234,7 +235,7 @@ class Gameboard extends Component {
 
     const componentBoard = this.state.boardArray.map((row, rowIndex) => {
       return row.map((spaceData, columnIndex) => {
-        return <Space key={`${rowIndex}${columnIndex}`} {...spaceData} revealBlanks={this.revealBlanks} revealSquare={this.revealSquare} rowIndex={rowIndex} columnIndex={columnIndex} boxSize={this.props.boxSize}/>
+        return <Space key={`${rowIndex}${columnIndex}`} {...spaceData} playerLost={this.state.playerLost} revealBlanks={this.revealBlanks} revealSquare={this.revealSquare} rowIndex={rowIndex} columnIndex={columnIndex} boxSize={this.props.boxSize}/>
       } )
     })
 
@@ -243,7 +244,26 @@ class Gameboard extends Component {
     return ( 
         
       <div>
-        <h1>Minesweeper</h1>
+        {/* <h1>Minesweeper</h1> */}
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+        >
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            lg={12}
+            xl={12}
+            alignItems="center"
+            alignContent="center"
+          >
+
+            
+
         <div className='gameBoard' 
           style={ 
           {display: 'grid',
@@ -256,6 +276,9 @@ class Gameboard extends Component {
         {/* <Button variant="contained" color="primary" onClick={this.resetGame}>
            Reset Game
          </Button> */}
+                   </Grid>
+                   </Grid>
+
       </div>
     )
   }

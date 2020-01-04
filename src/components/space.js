@@ -4,7 +4,7 @@ class Space extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      backgroundColor: '#444'
+      backgroundColor: '#7fe7cc'
     } 
   }
  
@@ -19,7 +19,7 @@ class Space extends Component {
 
   render() {
     let value = this.props.adjacent
-    let backgroundColor = '#444'
+    let backgroundColor = '#52de97'
     let color = 'black'
 
     if (this.props.revealed){
@@ -58,10 +58,18 @@ class Space extends Component {
       color = 'black'
     }
 
-    return ( <div className='space' onClick={this.localReveal} style={{background: backgroundColor, color: color, fontWeight: 'bold', fontSize: this.props.boxSize/2
-    }}> 
-      {this.props.revealed ? value : '' } 
-      {this.props.detonated ? '💥' : null}</div>
+    return ( 
+    
+    
+    <div className='space' onClick={this.localReveal} style={{background: backgroundColor, color: color, fontSize: this.props.boxSize/2}}> 
+     
+      <div>{this.props.revealed ? value : '' } </div>
+      
+      <div style={{	opacity: 1, animation: 'spin 4s linear infinite, fadeinout 1s linear infinite forwards'}}>
+        {this.props.bomb && this.props.playerLost && '💥' }
+      </div>
+
+    </div>
     )
   }
 }

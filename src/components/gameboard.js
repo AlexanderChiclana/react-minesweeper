@@ -31,11 +31,10 @@ class Gameboard extends Component {
       }else{
         console.log('its ovah')
       }
-    })
+    }, () => this.checkForWin())
 
     // checks to see if the player has lost 
-    this.state.boardArray[i][j].bomb ? this.setState({playerLost : true}) : null
-  
+    this.state.boardArray[i][j].bomb && !this.state.playerWon ? this.setState({playerLost : true}) : null
   }
 
   revealBlanks = () => {
@@ -67,8 +66,8 @@ class Gameboard extends Component {
     
   }
   
-  clearBoard = () => {
-    this.setState({  
+  clearBoard = async () => {
+    await this.setState({  
       boardArray: [],
       playerLost: false,
       playerWon: false
@@ -76,9 +75,16 @@ class Gameboard extends Component {
   }
 
   buildBoard = () => {
+   const nextState = []
+   
    for (let i = 0; i < this.props.yGrid; i++) {
-    this.state.boardArray.push([])
+    // this.state.boardArray.push([])
+    nextState.push([])
    }
+   this.setState({
+     boardArray: nextState
+   }, () => this.fillBoard())
+  //  this.fillBoard()
   }
 
   fillBoard = () => {
@@ -177,9 +183,30 @@ class Gameboard extends Component {
    }
     
   resetGame = () => {
-    // this.clearBoard()
-    // this.buildBoard()
+    this.clearBoard().then(() => this.buildBoard())
     // this.fillBoard()
+  }
+
+  checkForWin = () => {
+    let playedPieces = 0
+
+    this.state.boardArray.forEach(function(subArray, index){
+      // for each array I want to use the some method to check to see if any obj 
+      // contains the value of detonated 
+      subArray.forEach(function(space, spaceIndex){
+
+        if(space.revealed || space.bomb){
+          playedPieces++
+        }
+      })
+    })
+    if(playedPieces == (this.props.xGrid * this.props.yGrid)) {
+      console.log('WINNER WINNER')
+      alert('YOU HAVE WON')
+      this.setState({
+        playerWon: true
+      })
+    }    
   }
 
   componentWillMount(){
@@ -190,37 +217,30 @@ class Gameboard extends Component {
   //   bombFrequency: 2,
   //  })
    this.buildBoard()
-   this.fillBoard()
+  //  this.fillBoard()
   }
 
   componentWillUpdate(){
 
    
-    // need to write function that checks for wins and losses 
-    let playedPieces = 0
-    console.log(this.props.xGrid * this.props.yGrid)
+    // // need to write function that checks for wins and losses 
+    // let playedPieces = 0
+    // // console.log(this.props.xGrid * this.props.yGrid) 
+    // this.state.boardArray.forEach(function(subArray, index){
+    //   // for each array I want to use the some method to check to see if any obj 
+    //   // contains the value of detonated 
+    //   subArray.forEach(function(space, spaceIndex){
+    //     if(space.revealed || space.bomb){
+    //       playedPieces++
+    //     }
+    //   })
+    // })
 
-
- 
-    this.state.boardArray.forEach(function(subArray, index){
-      // for each array I want to use the some method to check to see if any obj 
-      // contains the value of detonated 
-      subArray.forEach(function(space, spaceIndex){
-        if(space.revealed || space.bomb){
-          playedPieces++
-        }
-      
-      })
-    })
-
-    if(playedPieces == (this.props.xGrid * this.props.yGrid)) {
-      console.log('WINNER WINNER')
-      alert('YOU HAVE WON')
-    }
-
-
-    console.log(playedPieces)
-    
+    // if(playedPieces == (this.props.xGrid * this.props.yGrid)) {
+    //   console.log('WINNER WINNER')
+    //   alert('YOU HAVE WON')
+    //   // this.setState({playerWon: true})
+    // }    
   }
 
   
@@ -235,7 +255,7 @@ class Gameboard extends Component {
 
     const componentBoard = this.state.boardArray.map((row, rowIndex) => {
       return row.map((spaceData, columnIndex) => {
-        return <Space key={`${rowIndex}${columnIndex}`} {...spaceData} playerLost={this.state.playerLost} revealBlanks={this.revealBlanks} revealSquare={this.revealSquare} rowIndex={rowIndex} columnIndex={columnIndex} boxSize={this.props.boxSize}/>
+        return <Space key={`${rowIndex}${columnIndex}`} {...spaceData} playerWon={this.state.playerWon} playerLost={this.state.playerLost} revealBlanks={this.revealBlanks} revealSquare={this.revealSquare} rowIndex={rowIndex} columnIndex={columnIndex} boxSize={this.props.boxSize}/>
       } )
     })
 
@@ -273,9 +293,11 @@ class Gameboard extends Component {
           {componentBoard}
 
         </div> 
-        {/* <Button variant="contained" color="primary" onClick={this.resetGame}>
-           Reset Game
-         </Button> */}
+       
+         <Button variant="contained" color="primary" onClick={this.resetGame}>
+           reset
+         </Button>
+
                    </Grid>
                    </Grid>
 

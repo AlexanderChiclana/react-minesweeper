@@ -67,6 +67,7 @@ class Space extends Component {
       
       <div style={{	opacity: 1, animation: 'spin 4s linear infinite, fadeinout 1s linear infinite forwards'}}>
         {this.props.bomb && this.props.playerLost && '💥' }
+        {this.props.bomb && this.props.playerWon && '🥳 ' }
       </div>
 
     </div>

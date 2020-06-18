@@ -294,9 +294,12 @@ class Gameboard extends Component {
 
         </div> 
        
-         <Button variant="contained" color="primary" onClick={this.resetGame}>
+       <div style={{width: '100%', textAlign: 'center'}}>
+       <Button variant="contained" style={{ marginTop: '10px' }}color="primary" onClick={this.resetGame}>
            reset
          </Button>
+       </div>
+        
 
                    </Grid>
                    </Grid>

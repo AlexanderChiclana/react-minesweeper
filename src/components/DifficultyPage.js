@@ -45,34 +45,12 @@ function SimpleCard(props) {
   const { classes } = props
 
   return (
-    <div className={classes.root}>
-
-{/* <Grid container
-  spacing={0}
-  direction="column"
-  alignItems="center"
-  justify="center">
-
-    <Grid item xs={12} sm={12} lg={12} xl={12}   alignItems="center" alignContent="center">
-
-    <Typography component="h2" variant="h1" gutterBottom>
-    React Minesweeper
-    </Typography>
-    </Grid>
-    <Grid item xs={12} sm={12} lg={12} xl={12}>
-    <Typography variant="h5" gutterBottom>
-
-    Choose a difficulty, or create your own
-    </Typography>
-    </Grid>
-</Grid> */}
+    <div style={{ display: 'flex', width: '100%', justifyContent: 'center', flexWrap: 'wrap'}} className={classes.root}>
 
 
-    <Grid container spacing={8}>
 
-    <Grid item xs={12} sm={6} lg={3} xl={3}>
-
-    <Card className={classes.card}>
+  
+    <Card style={{padding: '10px',  margin: '10px',  backgroundColor: '#ffba5a'}}className={classes.card}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           Difficulty
@@ -80,13 +58,11 @@ function SimpleCard(props) {
         <Typography variant="h5" component="h2">
             Beginner
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
-        </Typography>
+   
         <Typography component="p">
-          well meaning and kindly.
+         8 x 8
           <br />
-          {'"a benevolent smile"'}
+          should be easy
         </Typography>
       </CardContent>
       <CardActions>
@@ -100,10 +76,10 @@ function SimpleCard(props) {
 
       </CardActions>
     </Card>
-    </Grid>
+    
 
-    <Grid item xs={12} sm={6} lg={3} xl={3}>
-<Card className={classes.card}>
+    
+<Card style={{padding: '10px',  margin: '10px',  backgroundColor: '#ffba5a'}} className={classes.card}>
   <CardContent>
     <Typography className={classes.title} color="textSecondary" gutterBottom>
       Difficulty
@@ -111,13 +87,9 @@ function SimpleCard(props) {
     <Typography variant="h5" component="h2">
       Intermediate
     </Typography>
-    <Typography className={classes.pos} color="textSecondary">
-      adjective
-    </Typography>
     <Typography component="p">
-      well meaning and kindly.
-      <br />
-      {'"a benevolent smile"'}
+16 x 16      <br />
+      a solid challenge
     </Typography>
   </CardContent>
   <CardActions>
@@ -131,10 +103,8 @@ function SimpleCard(props) {
 
    </CardActions>
 </Card>
-</Grid>
 
-<Grid item xs={12} sm={6} lg={3} xl={3}>
-<Card className={classes.card}>
+<Card style={{padding: '10px', margin: '10px', backgroundColor: '#ffba5a' }} className={classes.card}>
   <CardContent>
     <Typography className={classes.title} color="textSecondary" gutterBottom>
       Difficulty
@@ -142,13 +112,9 @@ function SimpleCard(props) {
     <Typography variant="h5" component="h2">
        Expert
     </Typography>
-    <Typography className={classes.pos} color="textSecondary">
-      adjective
-    </Typography>
     <Typography component="p">
-      well meaning and kindly.
-      <br />
-      {'"a benevolent smile"'}
+16 x 30      <br />
+      hope for the best
     </Typography>
   </CardContent>
   <CardActions>
@@ -162,7 +128,7 @@ function SimpleCard(props) {
 
     </CardActions>
 </Card>
-</Grid>
+
 
 
 {/* <Grid item xs={12} sm={6} lg={3} xl={3}>
@@ -193,8 +159,8 @@ function SimpleCard(props) {
     </CardActions>
 </Card>
 </Grid> */}
-    <CustomGame />
-    </Grid>
+    {/* <CustomGame /> */}
+    
     </div>
   )
 }
